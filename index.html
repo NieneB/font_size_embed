@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0"
+    />
+    <title>Crafty Map Example</title>
+    <meta property="og:title" content="Crafty Map Example" />
+    <meta charset="utf-8" />
+    <meta property="og:type" content="article" />
+
+    <meta property="og:description" content="Crafty Map styling example" />
+    <meta property="description" content="Crafty Map styling example" />
+
+    <link rel="stylesheet" href="static/idyll_styles.css" />
+  </head>
+  <body>
+    <div id="idyll-mount"><div data-reactroot=""><div class="idyll-root"><div class=" idyll-text-container"><div class="float left" style="float:left;width:50%"><h1>Font size</h1><p>JavaScript function for changing all the font sizes in the maps style:</p><pre style="display:block;overflow-x:auto;padding:0.5em;color:#333;background:#f8f8f8"><code><span style="color:#333;font-weight:bold">const</span> changeFontSize = <span><span style="color:#333;font-weight:bold">function</span>(<span>factor</span>) </span>{
+  <span style="color:#998;font-style:italic">//Get current style </span>
+  <span style="color:#333;font-weight:bold">let</span> stijl = map.getStyle();
+  <span style="color:#998;font-style:italic">// Check for all style layers if contains a text-size</span>
+  stijl.layers.forEach(<span><span>layer</span> =&gt;</span> {
+    <span style="color:#333;font-weight:bold">if</span> (layer.type === <span style="color:#d14">&quot;symbol&quot;</span> &amp;&amp; layer.layout[<span style="color:#d14">&quot;text-size&quot;</span>]) {
+      <span style="color:#998;font-style:italic">//multiply current text size with the factor</span>
+      <span style="color:#333;font-weight:bold">let</span> currentsize = layer.layout[<span style="color:#d14">&quot;text-size&quot;</span>];
+      <span style="color:#998;font-style:italic">// text-size interpolation per zoom level</span>
+      <span style="color:#333;font-weight:bold">if</span> (currentsize.length &gt; <span style="color:#008080">4</span>) { 
+        <span style="color:#333;font-weight:bold">for</span> (<span style="color:#333;font-weight:bold">let</span> i = <span style="color:#008080">4</span>; i &lt;= currentsize.length; i += <span style="color:#008080">2</span>) {
+          currentsize[i] = currentsize[i] * factor;
+        }
+        map.setLayoutProperty(layer.id, <span style="color:#d14">&quot;text-size&quot;</span>, currentsize);
+      } 
+        <span style="color:#998;font-style:italic">// one text-size given</span>
+        <span style="color:#333;font-weight:bold">else</span> <span style="color:#333;font-weight:bold">if</span> (<span style="color:#333;font-weight:bold">typeof</span> currentsize === <span style="color:#d14">&quot;number&quot;</span>) {
+        map.setLayoutProperty(layer.id, <span style="color:#d14">&quot;text-size&quot;</span>, currentsize * factor);
+      } <span style="color:#333;font-weight:bold">else</span> {
+        <span style="color:#998;font-style:italic">//no other possibilities (yet)</span>
+      }
+    }
+  });
+};</code></pre><code>changeFontSize(</code><span class="idyll-dynamic">1.00</span><code>);</code></div><div class="float right" style="float:right;width:50%"><div style="position:relative;width:900px;height:800px;cursor:grab"><div style="position:relative;width:100%;height:100%"><div style="position:absolute;width:100%;height:100%;overflow:hidden;visibility:inherit" class=""></div><div style="overflow:visible;height:0;width:0"></div></div></div></div></div></div></div></div>
+    <script src="static/idyll_index.js"></script>
+  </body>
+</html>
